@@ -1,19 +1,25 @@
-/*let grid, rows, columns;
-let cellSpacingX = 5, cellSpacingY = 5, mulX = 230, mulY = 130;
-let mouseIsPressed = false;
-let HUEValue = 200, sandColorChangeRate = 20;
-let dropAreaX = 2, dropAreaY = 2;*/
-
 let grid, rows, columns;
-let cellSpacingX = 10, cellSpacingY = 10, mulX = 100, mulY = 70;
+let cellSpacingX = 15, cellSpacingY = 15, mulX = 102, mulY = 49;
 let mouseIsPressed = false;
 let HUEValue = 200, sandColorChangeRate = 20;
-let dropAreaX = 2, dropAreaY = 2
+let dropAreaX = 1, dropAreaY = 1;
+let colorsOfSand = [
+  [246, 215, 176],
+  [242, 210, 169],
+  [236, 204, 162],
+  [231, 196, 150],
+  [225, 191, 146],
+  [194, 178, 128],
+  [225, 170, 114],
+  [219, 154, 89],
+  [255, 226, 156],
+  [234, 191, 125]
+];
 
 function setup()
 {
   createCanvas(cellSpacingX * mulX, cellSpacingY * mulY);
-  colorMode(HSB, 360, 255, 255);
+  //colorMode(HSB, 360, 255, 255);
   columns = floor(width / cellSpacingX);
   rows = floor(height / cellSpacingY);
   grid = make2DArray(width, height);
@@ -30,7 +36,8 @@ function draw()
       noStroke();
       if ( grid[j][i] > 0 )
       {
-        fill(grid[j][i], 255, 255);
+        //fill(grid[j][i], 255, 255);
+        fill(colorsOfSand[grid[j][i]][0], colorsOfSand[grid[j][i]][1], colorsOfSand[grid[j][i]][2]);
         rect(i * cellSpacingX, j * cellSpacingY, cellSpacingX, cellSpacingY);
       }
     }
@@ -46,7 +53,7 @@ function draw()
       {
         if ( random(0, 1) > 0.80 && isValidPosition(x, y) && grid[y][x] == 0 )
         {
-          grid[y][x] = HUEValue;
+          grid[y][x] = floor(random(colorsOfSand.length)); //HUEValue
         }
       }
     }
@@ -63,7 +70,7 @@ function keyPressed()
     if ( isValidPosition(x, y) && grid[y][x] == 0 )
     {
       HUEValue = ( HUEValue + sandColorChangeRate ) % 359;
-      grid[y][x] = HUEValue;
+      grid[y][x] = floor(random(colorsOfSand.length)); //HUEValue
     }
   }
 }
